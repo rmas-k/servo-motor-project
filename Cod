@@ -1,0 +1,46 @@
+
+#include <Servo.h>
+
+Servo servos[4];
+
+// Define the pins connected to the servo motors
+int servoPins[4] = {9, 10, 11, 3}; // Adjust as per your wiring
+
+void setup() {
+  // Attach each servo to its pin
+  for (int i = 0; i < 4; i++) {
+    servos[i].attach(servoPins[i]);
+  }
+}
+
+void loop() {
+  // Sweep movement for 2 seconds
+  unsigned long startTime = millis();
+
+  while (millis() - startTime < 2000) {
+    // Sweep from 0 to 180
+    for (int pos = 0; pos <= 180; pos++) {
+      for (int i = 0; i < 4; i++) {
+        servos[i].write(pos);
+      }
+      delay(5);
+    }
+
+    // Sweep back from 180 to 0
+    for (int pos = 180; pos >= 0; pos--) {
+      for (int i = 0; i < 4; i++) {
+        servos[i].write(pos);
+      }
+      delay(5);
+    }
+  }
+
+  // After 2 seconds, hold all servos at 90 degrees
+  for (int i = 0; i < 4; i++) {
+    servos[i].write(90);
+  }
+
+  while (true) {
+    // Stop loop by freezing here
+  }
+}
